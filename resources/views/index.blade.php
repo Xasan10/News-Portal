@@ -29,10 +29,10 @@
                    @if($articles)
                              <div class="trending-top mb-30">
                             <div class="trend-top-img">
-                                <img src="https://placehold.co/640x480.png?text=News+Article" alt="">
+                            <img src="https://placehold.co/640x480.png?text=News+Article" alt="">
                                 <div class="trend-top-cap">
                                     <span>{{ $articles->category_name }}</span>
-                                    <h2><a href="details.html">{{$articles->title }}</a></h2>
+                                    <h2><a href="{{ route('show.details',$articles->id) }}">{{$articles->title }}</a></h2>
                                 </div>
                             </div>
                         </div>
@@ -50,7 +50,7 @@
                                     </div>
                                     <div class="trend-bottom-cap">
                                         <span class="color1">{{ $bottom->category_name }}</span>
-                                        <h4><a href="details.html">{{ $bottom->title }}</a></h4>
+                                        <h4><a href="{{ route('show.details',$bottom->id )}}">{{ $bottom->title }}</a></h4>
                                     </div>
                                 </div>
                                 </div>
@@ -67,7 +67,7 @@
                             </div>
                             <div class="trand-right-cap">
                                 <span class="color1">{{ $new->category_name }}</span>
-                                <h4><a href="details.html">{{ $new->title }}</a></h4>
+                                <h4><a href="{{ route('show.details',$new->id) }}">{{ $new->title }}</a></h4>
                             </div>
                         </div>
                        @endforeach
@@ -201,7 +201,7 @@
                                 <div class="weekly2-caption">
                                     <span class="color1">{{$new->category_name }}</span>
                                     <p>{{ \Carbon\Carbon::parse($new->created_at)->format('d M Y')  }}</p>
-                                    <h4><a href="#">{{ $new->title }}</a></h4>
+                                    <h4><a href="{{ route('show.details',$new->id) }}">{{ $new->title }}</a></h4>
                                 </div>
                             </div> 
                             @endforeach                     

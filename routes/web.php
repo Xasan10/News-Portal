@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CategoryViewController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\DetailsViewController;
 use App\Http\Controllers\HomeViewController;
 use App\Http\Controllers\MediaViewController;
 use Illuminate\Support\Facades\Route;
@@ -11,10 +12,10 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [HomeViewController::class,'index'])->name('home');
 
-Route::get('/category/ajax/{slug}', [HomeViewController::class, 'ajaxFilteredArticles']);
+Route::get('/category/ajax/{slug}', [HomeViewController::class, 'ajaxFilteredArticles'])->name('category.ajax');
 
 
-Route::get('/category/ajax/{slug}', [CategoryViewController::class, 'ajaxFilteredArticles']);
+Route::get('category/ajax/{slug}', [CategoryViewController::class, 'filteredArticles'])->name('filter');
 
 Route::get('/category',[CategoryViewController::class,'index'])->name('category');
 
@@ -27,6 +28,8 @@ route::get('/dashboard',[DashboardController::class,'showDashboard'])->name('sho
 
 
 Route::post('/logout',[AuthController::class,'logout'])->name('logout');
+
+Route::get('/details/{id}',[DetailsViewController::class,'view'])->name('show.details');
 
 
 Route::middleware('guest')->group(function () {

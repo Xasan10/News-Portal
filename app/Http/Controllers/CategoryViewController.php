@@ -14,7 +14,7 @@ class CategoryViewController extends Controller
 
 
         $filteredArticles  = DB::table('articles')->join('categories', 'articles.id', '=', 'categories.id')
-                                                        ->select('articles.title','articles.body','categories.name as category_name')
+                                                        ->select('articles.title','articles.body','categories.name as category_name','articles.id')
                                                         ->paginate(4);
 
 
@@ -31,12 +31,12 @@ class CategoryViewController extends Controller
 
 
     }
-     public function ajaxFilteredArticles($slug)
+     public function filteredArticles($slug)
 {
     if ($slug === 'all') {
         $filteredArticles = DB::table('articles')
-            ->join('categories', 'articles.category_id', '=', 'categories.id')
-            ->select('articles.title', 'categories.name as category_name', 'articles.created_at')
+            ->join('categories', 'articles.category_id', '=', 'categories.id',)
+            ->select('articles.title', 'categories.name as category_name', 'articles.created_at','articles.id')
             ->orderBy('articles.created_at', 'desc')
             ->take(4)
             ->get();
@@ -46,7 +46,7 @@ class CategoryViewController extends Controller
             ? DB::table('articles')
                 ->join('categories', 'articles.category_id', '=', 'categories.id')
                 ->where('articles.category_id', $category->id)
-                ->select('articles.title', 'categories.name as category_name', 'articles.created_at')
+                ->select('articles.title', 'categories.name as category_name', 'articles.created_at','articles.id')
                 ->orderBy('articles.created_at', 'desc')
                 ->take(4)
                 ->get()

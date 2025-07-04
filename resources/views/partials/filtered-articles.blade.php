@@ -6,7 +6,7 @@
             </div>
             <div class="what-cap">
                 <span class="color1">{{ $new->category_name }}</span>
-                <h4><a href="#">{{ $new->title }}</a></h4>
+                <h4><a href="{{ route('show.details',$new->id)}}">{{ $new->title }}</a></h4>
             </div>
         </div>
     </div>
