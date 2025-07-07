@@ -20,10 +20,9 @@ Route::apiResource('/articles',ArticlesController::class);
 Route::apiResource('/categories',CatgeoryController::class);
 
 
+Route::post('/users/{user}/role', [RoleController::class, 'updateRole'])->name('updateRole');
 
-Route::post('/roles', [RoleController::class,'assignrole'])->middleware('role:admin');
 
-Route::post('/roles', [RoleController::class,'removeRole'])->middleware('role:admin');
 
 
 

@@ -6,6 +6,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DetailsViewController;
 use App\Http\Controllers\HomeViewController;
 use App\Http\Controllers\MediaViewController;
+use App\Http\Controllers\RoleController;
 use Illuminate\Support\Facades\Route;
 
 

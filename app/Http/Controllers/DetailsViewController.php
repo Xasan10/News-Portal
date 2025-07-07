@@ -10,11 +10,11 @@ class DetailsViewController extends Controller
     
     public function view($id){
 
-        $id = Article::findOrFail($id);
+        $article = Article::findOrFail($id);
 
 
 
-        return view('details',['data'=>$id]);
+        return view('details',['data'=>$article]);
     }
 
 
