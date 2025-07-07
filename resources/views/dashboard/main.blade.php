@@ -200,6 +200,18 @@
 											<td>{{ $user->name }}</td>
 											<td class="d-none d-xl-table-cell">{{\Carbon\Carbon::parse($user->created_at)->format('Y-m-d')}}</td>
 											<td><span class="badge bg-success">{{ $user->roles->first()->name ?? 'No role'}}</span></td>
+											<td>
+										<form class="role-form" data-user-id="{{ $user->id }}">
+											@csrf
+											<select name="role">
+												<option value="admin" {{ $user->hasRole('admin') ? 'selected' : '' }}>Admin</option>
+												<option value="editor" {{ $user->hasRole('editor') ? 'selected' : '' }}>Editor</option>
+												<option value="author" {{ $user->hasRole('author') ? 'selected' : '' }}>Author</option>
+												<option value="user" {{ $user->hasRole('user') ? 'selected' : '' }}>User</option>
+											</select>
+</form>
+
+										</td>
 											<td class="d-none d-md-table-cell">Vanessa Tucker</td>
 										</tr>
                                     @endforeach
@@ -224,5 +236,45 @@
 
 				</div>
 			</main>
+<meta name="csrf-token" content="{{ csrf_token() }}">
+<script>
+    document.querySelectorAll('.role-form select').forEach(select => {
+        select.addEventListener('change', function () {
+            const form = this.closest('form');
+            const userId = form.dataset.userId;
+            const role = this.value;
+            const token = document.querySelector('meta[name="csrf-token"]').content;
+
+            fetch(`api/users/${userId}/role`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': token,
+                },
+                body: JSON.stringify({ role: role })
+            })
+            .then(response => {
+                if (!response.ok) throw new Error('Request failed');
+                return response.json();
+            })
+            .then(data => {
+                alert(data.message);
+            })
+           .catch(async error => {
+    try {
+        const errorText = await error.text?.() || await error.response?.text?.();
+        console.error('Server response:', errorText);
+        alert(errorText);
+    } catch (e) {
+        console.error('Unknown error:', e);
+        alert('Failed to update role.');
+    }
+});
+
+        });
+    });
+</script>
+
+
 
 @endsection
