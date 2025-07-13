@@ -1,143 +1,156 @@
 @extends('layouts.app')
 
    @section('content')
+  <section class="blog_area single-post-area section-padding">
+      <div class="container">
+         <div class="row">
+            <div class="col-lg-8 posts-list">
+               <div class="single-post">
+                  <div class="feature-img">
+                     <img class="img-fluid" src="assets/img/blog/single_blog_1.png" alt="">
+                  </div>
+                  <div class="blog_details">
+                     <h2>{{ $data->title }}
+                     </h2>
+                     <ul class="blog-info-link mt-3 mb-4">
+                        <li><a href="#"><i class="fa fa-user"></i> {{ $data->category_name }}</a></li>
+                        <li><a href="#"><i class="fa fa-comments"></i> 03 Comments</a></li>
+                     </ul>
+                     <p class="excert">
+                        {{ $data->body }}
+                     </p>
+               
+                        MCSE boot camps have its supporters and its detractors. Some people do not understand why you
+                        should have to spend money on boot camp when you can get the MCSE study materials yourself at a
+                        fraction of the camp price. However, who has the willpower to actually sit through a
+                        self-imposed MCSE training. who has the willpower to actually
+                     </p>
+                  </div>
+               </div>
+               <div class="comments-area" id="comments">
+                    <h4>{{ count($comments) }} Comments</h4>
+                  @foreach ($comments as $comment )
+                  
+                
+                  <div class="comment-list">
+                     <div class="single-comment justify-content-between d-flex">
+                        <div class="user justify-content-between d-flex">
+                           <div class="thumb">
+                              <img src="assets/img/comment/comment_3.png" alt="">
+                           </div>
+                           <div class="desc">
+                              <p class="comment">
+                                {{ $comment->content }}
+                              </p>
+                              <div class="d-flex justify-content-between">
+                                 <div class="d-flex align-items-center">
+                                    <h5>
+                                       <a href="#">{{ $comment->user->name }}</a>
+                                    </h5>
+                                    <p class="date">{{  $comment->updated_at->format('F j, Y H:i')  }}</p>
+                                 </div>
+                                 <div class="reply-btn">
+                                 Reply
+                                 </div>
 
-     <main>
-        <!-- About US Start -->
-        <div class="about-area">
-            <div class="container">
-                    <!-- Hot Aimated News Tittle-->
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <div class="trending-tittle">
-                                <strong>Trending now</strong>
-                                <!-- <p>Rem ipsum dolor sit amet, consectetur adipisicing elit.</p> -->
-                                <div class="trending-animated">
-                                    <ul id="js-news" class="js-hidden">
-                                        <li class="news-item">Bangladesh dolor sit amet, consectetur adipisicing elit.</li>
-                                        <li class="news-item">Spondon IT sit amet, consectetur.......</li>
-                                        <li class="news-item">Rem ipsum dolor sit amet, consectetur adipisicing elit.</li>
-                                    </ul>
-                                </div>
-                                
-                            </div>
+                              </div>
+                               <form class="edit-comment-form" style="display: none;" data-id="{{ $comment->id }}">
+                                   @csrf
+                                  <textarea class="edit-content"></textarea>
+                                  <button type="button" class="save-edit">Save</button>
+                               </form>   
+                           </div>
                         </div>
-                    </div>
-                   <div class="row">
-                        <div class="col-lg-8">
-                            <!-- Trending Tittle -->
-                            <div class="about-right mb-90">
-                                <div class="about-img">
-                                    <img src="https://placehold.co/640x480.png?text=News+Article" alt="">
-                                </div>
-                                <div class="section-tittle mb-30 pt-30">
-                                    <h3>{{ $data->title }}</h3>
-                                </div>
-                                <div class="about-prea">
-                                    <p class="about-pera1 mb-25">
-                                        {{ $data->body }}
-                                </div> 
-                                <div class="social-share pt-30">
-                                    <div class="section-tittle">
-                                        <h3 class="mr-20">Share:</h3>
-                                        <ul>
-                                            <li><a href="#"><img src="assets/img/news/icon-ins.png" alt=""></a></li>
-                                            <li><a href="#"><img src="assets/img/news/icon-fb.png" alt=""></a></li>
-                                            <li><a href="#"><img src="assets/img/news/icon-tw.png" alt=""></a></li>
-                                            <li><a href="#"><img src="assets/img/news/icon-yo.png" alt=""></a></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- From -->
-                            <div class="row">
-                                <div class="col-lg-8">
-                                    <form class="form-contact contact_form mb-80" action="contact_process.php" method="post" id="contactForm" novalidate="novalidate">
-                                        <div class="row">
-                                            <div class="col-12">
-                                                <div class="form-group">
-                                                    <textarea class="form-control w-100 error" name="message" id="message" cols="30" rows="9" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter Message'" placeholder="Enter Message"></textarea>
-                                                </div>
-                                            </div>
-                                            <div class="col-sm-6">
-                                                <div class="form-group">
-                                                    <input class="form-control error" name="name" id="name" type="text" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter your name'" placeholder="Enter your name">
-                                                </div>
-                                            </div>
-                                            <div class="col-sm-6">
-                                                <div class="form-group">
-                                                    <input class="form-control error" name="email" id="email" type="email" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter email address'" placeholder="Email">
-                                                </div>
-                                            </div>
-                                            <div class="col-12">
-                                                <div class="form-group">
-                                                    <input class="form-control error" name="subject" id="subject" type="text" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter Subject'" placeholder="Enter Subject">
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="form-group mt-3">
-                                            <button type="submit" class="button button-contactForm boxed-btn">Send</button>
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
+                     </div>
+                  </div>
+                  @endforeach
+               </div>
+               <div class="comment-form">
+                  <h4>Leave a Reply</h4>
+                  <form class="form-contact comment_form" id="comment-form" method="POST" action="{{ route('comments.store',$data->id) }}" id="commentForm">
+
+                          @csrf
+                        <input type="hidden" name="article_id" value="{{ $data->id }}">
+
+                     <div class="row">
+                        <div class="col-12">
+                           <div class="form-group">
+                              <textarea class="form-control w-100" name="content" id="comment" cols="30" rows="9"
+                                 placeholder="Write Comment"></textarea>
+                           </div>
                         </div>
-                        <div class="col-lg-4">
-                            <!-- Section Tittle -->
-                            <div class="section-tittle mb-40">
-                                <h3>Follow Us</h3>
-                            </div>
-                            <!-- Flow Socail -->
-                            <div class="single-follow mb-45">
-                                <div class="single-box">
-                                    <div class="follow-us d-flex align-items-center">
-                                        <div class="follow-social">
-                                            <a href="#"><img src="assets/img/news/icon-fb.png" alt=""></a>
-                                        </div>
-                                        <div class="follow-count">  
-                                            <span>8,045</span>
-                                            <p>Fans</p>
-                                        </div>
-                                    </div> 
-                                    <div class="follow-us d-flex align-items-center">
-                                        <div class="follow-social">
-                                            <a href="#"><img src="assets/img/news/icon-tw.png" alt=""></a>
-                                        </div>
-                                        <div class="follow-count">
-                                            <span>8,045</span>
-                                            <p>Fans</p>
-                                        </div>
-                                    </div>
-                                        <div class="follow-us d-flex align-items-center">
-                                        <div class="follow-social">
-                                            <a href="#"><img src="assets/img/news/icon-ins.png" alt=""></a>
-                                        </div>
-                                        <div class="follow-count">
-                                            <span>8,045</span>
-                                            <p>Fans</p>
-                                        </div>
-                                    </div>
-                                    <div class="follow-us d-flex align-items-center">
-                                        <div class="follow-social">
-                                            <a href="#"><img src="assets/img/news/icon-yo.png" alt=""></a>
-                                        </div>
-                                        <div class="follow-count">
-                                            <span>8,045</span>
-                                            <p>Fans</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- New Poster -->
-                            <div class="news-poster d-none d-lg-block">
-                                <img src="assets/img/news/news_card.jpg" alt="">
-                            </div>
-                        </div>
-                   </div>
+                     </div>
+                     <div class="form-group">
+                        <button type="submit" class="button button-contactForm btn_1 boxed-btn">Post Comment</button>
+                     </div>
+                  </form>
+               </div>
             </div>
-        </div>
-        <!-- About US End -->
-    </main>
+         </div>
+      </div>
+   </section>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+
+<script>
+
+        const form = $(this).closest('.edit-comment-form');
+        const commentId = form.data('id');
+        const updatedContent = form.find('.edit-content').val();
+
+        $.ajax({
+            url: `/comments/${commentId}`,
+            method: 'PUT',
+            data: {
+                _token: '{{ csrf_token() }}',
+                content: updatedContent
+            },
+            success: function (response) {
+                // Update content on the page
+                $(`#comment-${commentId} .comment-content`).text(response.content);
+
+                // Hide the edit form
+                form.hide();
+            },
+            error: function () {
+                alert("Update failed.");
+            }
+        });
+    });
+
+
+
+    $('#comment-form').on('submit', function(e) {
+        e.preventDefault(); // Prevent page reload
+
+        $.ajax({
+            url: '{{ route("comments.store",$data->id) }}',
+            method: 'POST',
+            data: $(this).serialize(),
+            success: function(response) {
+                // Optionally clear the form
+                $('#comment-form')[0].reset();
+
+                // Append new comment to the comment list
+                $('#comments').append(`
+                    <div class="comment">
+                        <strong>${response.user.name}</strong>: ${response.content}
+                    </div>
+                `);
+            },
+            error: function (xhr) {
+    alert("Something went wrong!\n" + xhr.responseText);
+}
+        });
+    });
+</script>
+
+
+
+
+
+
 
    
    @endsection

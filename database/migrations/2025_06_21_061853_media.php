@@ -11,17 +11,17 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('media',function(Blueprint $table){
+        // Schema::create('media',function(Blueprint $table){
 
-            $table->id();
-            $table->foreignId('article_id')->constrained()->onDelete('cascade');
-            $table->string('media_url'); // Can be a YouTube URL or local path
-            $table->enum('file_type', ['image', 'video', 'document', 'external'])->default('external');
-            $table->string('caption')->nullable();
-            $table->timestamps();
+        //     $table->id();
+        //     $table->foreignId('article_id')->constrained()->onDelete('cascade');
+        //     $table->string('media_url'); // Can be a YouTube URL or local path
+        //     $table->enum('file_type', ['image', 'video', 'document', 'external'])->default('external');
+        //     $table->string('caption')->nullable();
+        //     $table->timestamps();
 
 
-        });
+        // });
     }
 
     /**

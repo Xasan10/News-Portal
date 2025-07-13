@@ -65,7 +65,7 @@ class CommentsController extends Controller
 
     // Update the comment
     DB::table('comments')->where('id', $id)->update([
-        'body' => $data['body'],
+        'body' => $data['content'],
         'updated_at' => now(),
     ]);
 

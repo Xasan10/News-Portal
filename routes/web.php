@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CategoryViewController;
+use App\Http\Controllers\CommentsController;
+use App\Http\Controllers\CommentsViewController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DetailsViewController;
 use App\Http\Controllers\HomeViewController;
@@ -31,6 +33,10 @@ route::get('/dashboard',[DashboardController::class,'showDashboard'])->name('sho
 Route::post('/logout',[AuthController::class,'logout'])->name('logout');
 
 Route::get('/details/{id}',[DetailsViewController::class,'view'])->name('show.details');
+
+Route::post('/details/comments/{id}', [CommentsViewController::class, 'store'])->name('comments.store');
+
+
 
 
 Route::middleware('guest')->group(function () {
