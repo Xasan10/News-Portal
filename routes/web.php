@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ArticlesController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CategoryViewController;
 use App\Http\Controllers\CommentsController;
@@ -7,11 +8,14 @@ use App\Http\Controllers\CommentsViewController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DetailsViewController;
 use App\Http\Controllers\HomeViewController;
+use App\Http\Controllers\LoadMoreController;
 use App\Http\Controllers\MediaViewController;
+use App\Http\Controllers\PostViewController;
+use App\Http\Controllers\ProfileViewController;
 use App\Http\Controllers\RoleController;
+use App\Http\Controllers\UsersController;
 use Illuminate\Support\Facades\Route;
-
-
+use Symfony\Component\HttpKernel\Profiler\Profile;
 
 Route::get('/', [HomeViewController::class,'index'])->name('home');
 
@@ -37,7 +41,18 @@ Route::get('/details/{id}',[DetailsViewController::class,'view'])->name('show.de
 Route::post('/details/comments/{id}', [CommentsViewController::class, 'store'])->name('comments.store');
 
 
+Route::get('/search',[HomeViewController::class,'search'])->name('search.article');
 
+Route::get('/Profile/{id}',[ProfileViewController::class,'showProfile'])->name('profile');
+
+Route::get('/create-post',[PostViewController::class,'viewCreateArticles'])->name('post');
+
+Route::post('/create-post',[PostViewController::class,'store'])->name('post.store');
+
+Route::post('/update/{id}',[UsersController::class,'update'])->name('users.update');
+
+
+Route::get('/load-more-articles', [ProfileViewController::class, 'loadMore']);
 
 Route::middleware('guest')->group(function () {
     Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');

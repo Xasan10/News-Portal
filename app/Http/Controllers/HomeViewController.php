@@ -97,6 +97,19 @@ class HomeViewController extends Controller
     return view('partials.filtered-articles', ['filteredArticles' => $filteredArticles,]);
 }
 
+public function search(Request $request){
+
+
+        $search = $request->input('search');
+
+        $articles = Article::search($search)->get();
+        $articles->load('category'); 
+
+        return view('searchresult',['articles' => $articles, 'search' => $search]);
+
+
+
+}
 
 
 

@@ -87,8 +87,10 @@
                                 <div class="header-right-btn f-right d-none d-lg-block">
                                     <i class="fas fa-search special-tag"></i>
                                     <div class="search-box">
-                                        <form action="#">
-                                            <input type="text" placeholder="Search">
+                                        <form action="{{ route('search.article' )  }}" method="GET">
+
+                                            <input type="text" placeholder="Search" name="search" >
+                                      
                                             
                                         </form>
                                     </div>

@@ -54,11 +54,7 @@
                                  </div>
 
                               </div>
-                               <form class="edit-comment-form" style="display: none;" data-id="{{ $comment->id }}">
-                                   @csrf
-                                  <textarea class="edit-content"></textarea>
-                                  <button type="button" class="save-edit">Save</button>
-                               </form>   
+                            
                            </div>
                         </div>
                      </div>
@@ -95,29 +91,7 @@
 
 <script>
 
-        const form = $(this).closest('.edit-comment-form');
-        const commentId = form.data('id');
-        const updatedContent = form.find('.edit-content').val();
-
-        $.ajax({
-            url: `/comments/${commentId}`,
-            method: 'PUT',
-            data: {
-                _token: '{{ csrf_token() }}',
-                content: updatedContent
-            },
-            success: function (response) {
-                // Update content on the page
-                $(`#comment-${commentId} .comment-content`).text(response.content);
-
-                // Hide the edit form
-                form.hide();
-            },
-            error: function () {
-                alert("Update failed.");
-            }
-        });
-    });
+     
 
 
 

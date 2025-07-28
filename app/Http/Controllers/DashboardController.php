@@ -18,4 +18,7 @@ class DashboardController extends Controller
         return view('dashboard.main',['users'=>$users]);
 
     }
+
+
+
 }

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Hash;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash as FacadesHash;
 
 class UsersController extends Controller
 {
@@ -29,7 +30,7 @@ public function store(Request $request) {
     DB::table('users')->insert([
         'name' => $data['name'],
         'email' => $data['email'],
-        'password' => Hash::make($data['password']),
+        'password' => FacadesHash::make($data['password']),
         'created_at' => now(),
         'updated_at' => now(),
     ]);
@@ -47,16 +48,21 @@ public function update(Request $request, $id) {
         'name' => 'required|string|max:255',
         'email' => 'required|email|unique:users,email,' . $id,
         'password' => 'nullable|min:6|confirmed',
+        'img' =>'nullable|image|mimes:jpg,jpeg,png,gif,svg,webp|max:2048'
     ]);
+
+
+    $img = $request->file('img')->store('img','public');
 
     $updateData = [
         'name' => $data['name'],
         'email' => $data['email'],
         'updated_at' => now(),
+        'img' => $img
     ];
 
     if (!empty($data['password'])) {
-        $updateData['password'] = Hash::make($data['password']);
+        $updateData['password'] = FacadesHash::make($data['password']);
     }
 
     DB::table('users')->where('id', $id)->update($updateData);
