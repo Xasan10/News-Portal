@@ -54,6 +54,12 @@ Route::post('/update/{id}',[UsersController::class,'update'])->name('users.updat
 
 Route::get('/load-more-articles', [ProfileViewController::class, 'loadMore']);
 
+Route::get('/api/users', [UsersController::class,'searchUser'])->name('search.users');
+
+
+
+Route::get('/users',[UsersController::class,'showUsers'])->name('showUsers');
+
 Route::middleware('guest')->group(function () {
     Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
     Route::post('/login', [AuthController::class, 'login']);

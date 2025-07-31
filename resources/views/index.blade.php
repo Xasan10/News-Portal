@@ -29,7 +29,9 @@
                    @if($articles)
                              <div class="trending-top mb-30">
                             <div class="trend-top-img">
-                            <img src="https://placehold.co/640x480.png?text=News+Article" alt="">
+                        
+                                        <img src="https://placehold.co/640x480.png?text=News+Article" alt="">
+                              
                                 <div class="trend-top-cap">
                                     <span>{{ $articles->category_name }}</span>
                                     <h2><a href="{{ route('show.details',$articles->id) }}">{{$articles->title }}</a></h2>

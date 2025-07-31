@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Hash;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -75,4 +76,46 @@ public function destroy($id) {
     return redirect()->route('users.index')->with('success', 'User deleted!');
 }
 
+
+
+
+public function searchUser(Request $request){
+
+
+    $searched = $request->input('search');
+
+    $users = User::search($searched)->get();
+
+ 
+
+
+return view('dashboard.usersearch',['users' => $users]);
+
+
+
+
+
+
 }
+public function showUsers(Request $request){
+
+
+
+    $users = User::all();
+
+
+
+    return view('dashboard.users',['users' => $users]);
+
+
+
+
+
+
+}
+
+
+}
+
+
+
