@@ -44,7 +44,7 @@
                                 <form class="role-form" data-user-id="{{ $user->id }}">
                                     @csrf
                                     <select name="role">
-                                        <option value="admin" {{ $user->hasRole('admin') ? 'selected' : '' }}>Admin</option>
+                                        <option value="admin" {{ $user->hasRole('admin') ? 'selected' : '' }}>ADMINSTATOR</option>
                                         <option value="editor" {{ $user->hasRole('editor') ? 'selected' : '' }}>Editor</option>
                                         <option value="author" {{ $user->hasRole('author') ? 'selected' : '' }}>Author</option>
                                         <option value="user" {{ $user->hasRole('user') ? 'selected' : '' }}>User</option>
@@ -59,6 +59,30 @@
     </div>
 </div>
 
+<meta name="csrf-token" content="{{ csrf_token() }}">
+<script>
+    document.querySelectorAll('.role-form select').forEach(select => {
+        select.addEventListener('change', function () {
+            const form = this.closest('form');
+            const userId = form.dataset.userId;
+            const role = this.value;
+            const token = document.querySelector('meta[name="csrf-token"]').content;
+
+            fetch(`api/users/${userId}/role`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': token,
+                },
+                body: JSON.stringify({ role: role })
+            })
+         
+          
+           ;
+
+        });
+    });
+</script>
 
 
 

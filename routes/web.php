@@ -60,6 +60,9 @@ Route::get('/api/users', [UsersController::class,'searchUser'])->name('search.us
 
 Route::get('/users',[UsersController::class,'showUsers'])->name('showUsers');
 
+
+
+
 Route::middleware('guest')->group(function () {
     Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
     Route::post('/login', [AuthController::class, 'login']);

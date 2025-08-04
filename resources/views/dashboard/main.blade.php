@@ -253,23 +253,9 @@
                 },
                 body: JSON.stringify({ role: role })
             })
-            .then(response => {
-                if (!response.ok) throw new Error('Request failed');
-                return response.json();
-            })
-            .then(data => {
-                alert(data.message);
-            })
-           .catch(async error => {
-    try {
-        const errorText = await error.text?.() || await error.response?.text?.();
-        console.error('Server response:', errorText);
-        alert(errorText);
-    } catch (e) {
-        console.error('Unknown error:', e);
-        alert('Failed to update role.');
-    }
-});
+         
+          
+           ;
 
         });
     });

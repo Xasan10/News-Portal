@@ -20,7 +20,6 @@ Route::apiResource('/articles',ArticlesController::class);
 
 Route::apiResource('/categories',CatgeoryController::class);
 
-
 Route::post('/users/{user}/role', [RoleController::class, 'updateRole'])->name('updateRole');
 
 
