@@ -41,7 +41,7 @@
 					</li>
 
 					<li class="sidebar-header">
-						Tools & Components
+						Contents 
 					</li>
 
 					<li class="sidebar-item">
@@ -52,7 +52,7 @@
 
 					<li class="sidebar-item">
 						<a class="sidebar-link" href="{{ route('post') }}">
-              <i class="align-middle" data-feather="check-square"></i> <span class="align-middle">Forms</span>
+              <i class="align-middle" data-feather="check-square"></i> <span class="align-middle">News</span>
             </a>
 					</li>
 

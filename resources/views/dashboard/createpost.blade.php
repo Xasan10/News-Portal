@@ -85,9 +85,49 @@
                 <button class="btn btn-primary" type="submit">Cretae New Article</button>
 
                 </form>
+
+			  <table class="table table-hover my-0">
+                <thead>
+                    <tr>
+                        <th>id</th>
+                        <th>Title</th>
+                        <th>Category</th>
+                        <th>Author</th>
+                        <th class="d-none d-xl-table-cell">Created or Updated date</th>
+                
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach ($articles as $article)
+                        <tr>
+							<td>{{ $article->article_id }}</td>
+                            <td>{{ $article->title }}</td>
+                            <td>{{ $article->category_name }}</td>
+                            <td>{{ $article->author}}</td>
+
+                            <td class="d-none d-xl-table-cell">{{ \Carbon\Carbon::parse($article->updated_at)->format('Y-m-d') }}</td>
+                         
+                       
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+
+
+
+
+
 			</main>
+
+
+
+
 
 		
 		</div>
+
+
+
+
 
 @endsection

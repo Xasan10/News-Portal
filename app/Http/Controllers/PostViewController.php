@@ -6,6 +6,7 @@ use App\Models\Article;
 use App\Models\Category;
 use Illuminate\Contracts\Cache\Store;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
 class PostViewController extends Controller
@@ -17,8 +18,14 @@ class PostViewController extends Controller
 
         $categories = Category::all(); 
 
+        $articles = DB::table('articles')
+        ->join('categories', 'articles.category_id', "=", 'categories.id' )
+        ->join('users','articles.user_id','=','users.id')
+        ->select('categories.name as category_name', 'articles.title', 'articles.updated_at', 'articles.id as article_id','users.name as author')
+        ->orderBy('articles.updated_at','desc')->get();
 
-        return view('dashboard.createpost',['categories'=>$categories]);
+
+        return view('dashboard.createpost',['categories'=>$categories,'articles' => $articles]);
 
 
 
