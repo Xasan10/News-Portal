@@ -51,10 +51,15 @@ public function login(Request $request)
             'password' => 'required'
         ]);
 
-        if (Auth::attempt($credentials)) {
-            $request->session()->regenerate();
-            return redirect()->route('home');
-        }
+
+
+if (Auth::attempt($credentials)) {
+    if (auth()->user()->is_blocked) {
+        Auth::logout(); // log out the blocked user
+        return back()->withErrors([
+            'email' => 'Your account is blocked.',
+        ]);
+    }
 
         return back()->withErrors([
             'email' => 'Invalid credentials.',
@@ -62,6 +67,7 @@ public function login(Request $request)
 
 
 
+}
 }
 
  public function logout(Request $request)

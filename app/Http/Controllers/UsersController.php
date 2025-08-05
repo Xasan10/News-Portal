@@ -78,6 +78,21 @@ public function destroy($id) {
 
 
 
+public function toggleBlock($id)
+{
+    $user = User::findOrFail($id);
+    $user->is_blocked = !$user->is_blocked; // toggle
+    $user->save();
+
+    return back()->with('status', 'User ' . ($user->is_blocked ? 'blocked' : 'unblocked') . ' successfully.');
+}
+
+
+
+
+
+
+
 
 public function searchUser(Request $request){
 

@@ -61,6 +61,9 @@ Route::get('/api/users', [UsersController::class,'searchUser'])->name('search.us
 Route::get('/users',[UsersController::class,'showUsers'])->name('showUsers');
 
 
+Route::post('/users/{id}/block', [UsersController::class, 'toggleBlock'])->name('users.toggleBlock');
+
+
 
 
 Route::middleware('guest')->group(function () {

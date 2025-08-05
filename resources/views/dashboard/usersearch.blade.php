@@ -33,6 +33,7 @@
                         <th class="d-none d-xl-table-cell">Join Date</th>
                         <th>Role</th>
                         <th class="d-none d-md-table-cell">Assignee</th>
+                        <th class="d-none d-md-table-cell">	Restrict-User</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -52,6 +53,15 @@
                                     </select>
                                 </form>
                             </td>
+                                         <td>  
+                               <form action="{{ route('users.toggleBlock', $user->id) }}" method="POST" style="display:inline">
+                                    @csrf
+                                    <button type="submit" class="btn btn-sm {{ $user->is_blocked ? 'btn-success' : 'btn-danger' }}">
+                                        {{ $user->is_blocked ? 'Unblock' : 'Block' }}
+                                    </button>
+                                </form>
+
+                        </td>
                         </tr>
                     @endforeach
                 </tbody>

@@ -18,6 +18,7 @@
                             <a href="{{ route('show.details', $article->id) }}">{{ $article->title }}</a>
                         </h5>
                         <p class="card-text text-muted">{{ $article->category->name ?? 'No Category' }}</p>
+                        
                     </div>
                 </div>
             </div>
