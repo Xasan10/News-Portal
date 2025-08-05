@@ -18,7 +18,7 @@ class Article extends Model
             return [
 
                 'title' => $this->title,
-                'description'=> $this->description,
+            
 
             ];
         }

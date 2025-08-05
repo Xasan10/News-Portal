@@ -103,7 +103,7 @@ public function search(Request $request){
         $search = $request->input('search');
 
         $articles = Article::search($search)->get();
-        $articles->load('category'); 
+   
 
         return view('searchresult',['articles' => $articles, 'search' => $search]);
 
