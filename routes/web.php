@@ -31,8 +31,7 @@ Route::get('/media',[MediaViewController::class,'index'])->name('media');
 
 route::get('/forgot',[AuthController::class,'forgot'])->name('forgot');
 
-route::get('/dashboard',[DashboardController::class,'showDashboard'])->name('showDashboard')->middleware(['auth','role:admin']);
-
+route::get('/dashboard',[DashboardController::class,'showDashboard'])->name('showDashboard')->middleware(['auth', 'role:admin|editor|author']);
 
 Route::post('/logout',[AuthController::class,'logout'])->name('logout');
 
@@ -63,7 +62,10 @@ Route::get('/users',[UsersController::class,'showUsers'])->name('showUsers');
 
 Route::post('/users/{id}/block', [UsersController::class, 'toggleBlock'])->name('users.toggleBlock');
 
+Route::DELETE('/post/{id}', [PostViewController::class, 'destroy'])->name('post.destroy');
 
+Route::get('/post/update-view/{id}',[PostViewController::class,'updateView'])->name('post.updateview');
+Route::put('/post/update-view/{id}',[PostViewController::class,'Update'])->name('post.update');
 
 
 Route::middleware('guest')->group(function () {
@@ -72,4 +74,9 @@ Route::middleware('guest')->group(function () {
 
     Route::get('/register', [AuthController::class, 'showRegisterForm'])->name('register');
     Route::post('/register', [AuthController::class, 'register']);
+});
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('/profile/edit', [ProfileViewController::class, 'edit'])->name('profile.edit');
+    Route::post('/profile/upload-picture', [ProfileViewController::class, 'uploadPicture'])->name('profile.upload.picture');
 });

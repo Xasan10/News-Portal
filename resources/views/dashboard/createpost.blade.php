@@ -86,45 +86,122 @@
 
                 </form>
 
-			  <table class="table table-hover my-0">
+			  <table class="table table-hover my-0" id="myTable">
                 <thead>
                     <tr>
                         <th>id</th>
                         <th>Title</th>
                         <th>Category</th>
-                        <th>Author</th>
+                        @if (auth()->user()->hasAnyRole('admin|editor'))
+                            <th>Author</th>
+                        @endif
                         <th class="d-none d-xl-table-cell">Created or Updated date</th>
                 
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($articles as $article)
-                        <tr>
+                 
+					<form id="deleteForm" method="POST" style="display: none;">
+    					@csrf
+    					@method('DELETE')
+					   @foreach ($articles as $article)
+                        <tr data-id="{{ $article->article_id }}">
 							<td>{{ $article->article_id }}</td>
                             <td>{{ $article->title }}</td>
                             <td>{{ $article->category_name }}</td>
-                            <td>{{ $article->author}}</td>
+                            @if (auth()->user()->hasAnyRole('admin|editor'))
+                               <td>{{ $article->author}}</td>
+                            @endif
 
                             <td class="d-none d-xl-table-cell">{{ \Carbon\Carbon::parse($article->updated_at)->format('Y-m-d') }}</td>
-                         
+						
+	
                        
                         </tr>
+							
+
                     @endforeach
+
+
+
+					</form>
+
                 </tbody>
             </table>
-
+				
 
 
 
 
 			</main>
-
-
-
-
-
 		
 		</div>
+<ul id="contextMenu" 
+    style="display:none; position:absolute; z-index:1000; background:#fff; border:1px solid #ccc; list-style:none; padding:0; margin:0; width:150px;">
+    <li style="padding:8px; cursor:pointer;">
+        <a id="editLink" href="#">✏️ Edit</a>
+    </li>
+    <li style="padding:8px; cursor:pointer;">
+        <form action="" id="delete-id" method="POST">
+            @csrf
+            @method('DELETE')
+            <button type="submit" style="background:none;border:none;padding:0;color:red;cursor:pointer;">
+                🗑 Delete
+            </button>
+        </form>
+    </li>
+</ul>
+
+
+<script>
+
+const deleteForm = document.getElementById('delete-id')
+
+
+document.addEventListener('DOMContentLoaded', function () {
+    const table = document.getElementById('myTable');
+    const menu = document.getElementById('contextMenu');
+    const editLink = document.getElementById('editLink');
+
+    table.addEventListener('contextmenu', function (e) {
+        e.preventDefault();
+
+        if (e.target.tagName === 'TD') {
+            const row = e.target.closest('tr');
+            const id = row.dataset.id;
+
+            // update the edit link dynamically
+            editLink.href = `/post/update-view/${id}`;
+            deleteForm.action = `/post/${id}`;
+
+            // position the menu
+            menu.style.top = e.pageY + 'px';
+            menu.style.left = e.pageX + 'px';
+            menu.style.display = 'block';
+        }
+    });
+
+    // hide menu on click anywhere else
+    document.addEventListener('click', function () {
+        menu.style.display = 'none';
+    });
+});
+
+
+
+
+
+
+
+
+
+
+</script>
+
+
+
+
+
 
 
 

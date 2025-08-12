@@ -27,15 +27,14 @@
 									<h5 class="card-title mb-0">Profile Details</h5>
 								</div>
 								<div class="card-body text-center">
-									<form action="{{ route('users.update',$user->id) }}" enctype="multipart/form-data" method="post">
+				
 
-									@csrf
+								<a href="{{ route('profile.edit') }}"><img src="{{ 'storage/' . $user->img == null ? 'https://placehold.co/640x480.png?text=News+Article':'storage/' . $user->img == null}}" alt="Christina Mason" class="img-fluid rounded-circle mb-2" width="128" height="128" /></a>
 
-											<img src="{{ 'storage/' . $user->img == null ? 'https://placehold.co/640x480.png?text=News+Article':'storage/' . $user->img == null}}" alt="Christina Mason" class="img-fluid rounded-circle mb-2" width="128" height="128" />
-											<input type="file" name="img" accept="image/*"  >
-											<button type="submit">submit</button>
+											
+											
 
-									</form>
+									
 									<h5 class="card-title mb-0"></h5>
 									<div class="text-muted mb-2">Lead Developer</div>
 
@@ -74,45 +73,6 @@
 							</div>
 						</div>
 
-						<div class="col-md-8 col-xl-9">
-							<div class="card">
-								<div class="card-header">
-
-									<h5 class="card-title mb-0">Articles</h5>
-								</div>
-								<div class="card-body h-100">
-
-								<div id="article-list">
-									
-                                @foreach ($articles as $article )
-
-                                
-										<div class="col-12 col-md-6">
-									<div class="card">
-										<img class="card-img-top" src="{{ asset('storage/' . $article->thumbnail) }}" alt="Unsplash">
-										<div class="card-header">
-											<h5 class="card-title mb-0">Card with image and button</h5>
-										</div>
-										<div class="card-body">
-											<p class="card-text">{{ $article->title }}</p>
-											<a href="{{ route('show.details', $article->id) }}" class="btn btn-primary">Go somewhere</a>
-										</div>
-									</div>
-								</div>
-                                
-                                @endforeach
-								</div>
-                                
-
-								
-
-									<hr />
-									<div class="d-grid">
-										<button id="load-more-btn" data-offset="{{ count($articles) }}" class="btn btn-primary">Load more</button>
-									</div>
-								</div>
-							</div>
-						</div>
 					</div>
 
 				</div>
@@ -149,46 +109,7 @@
 	</div>
 
 
-<script>
 
-document.getElementById('load-more-btn').addEventListener('click', function () {
-    const btn = this;
-    let offset = parseInt(btn.dataset.offset);
-
-    fetch(`/load-more-articles?offset=${offset}&user_id={{ $user->id }}`)
-        .then(response => response.json())
-        .then(data => {
-            if (data.length === 0) {
-                btn.textContent = "No more articles";
-                btn.disabled = true;
-                return;
-            }
-
-            const list = document.getElementById('article-list');
-
-            data.forEach(article => {
-                const div = document.createElement('div');
-                div.className = 'col-12 col-md-6';
-                div.innerHTML = `
-                    <div class="card">
-                        <img class="card-img-top" src="/storage/${article.thumbnail}" alt="Article Image">
-                        <div class="card-header">
-                            <h5 class="card-title mb-0">${article.title}</h5>
-                        </div>
-                        <div class="card-body">
-                            <p class="card-text">${article.title}</p>
-                            <a href="/articles/${article.id}" class="btn btn-primary">Go somewhere</a>
-                        </div>
-                    </div>
-                `;
-                list.appendChild(div);
-            });
-
-            btn.dataset.offset = offset + data.length;
-        });
-});
-
-</script>
 
 
 

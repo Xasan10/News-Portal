@@ -69,9 +69,9 @@
                                         @endguest
                                         @auth   
                                                 
-                                           @role('admin')
+                                           @hasanyrole(['admin','editor'])
                                             <li><a href="{{ route('showDashboard') }}"> Dashboard</a></li>
-                                            @endrole
+                                            @endhasanyrole
                                          <form action="{{ route('logout') }}" method="POST" style="display: inline;">
                                                   @csrf
                                                  <button type="submit" style="background: none; border: none; color: #002e5b; font-weight:500; font: inherit; cursor: pointer; padding: 0; ">Logout</button>
