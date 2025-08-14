@@ -120,5 +120,28 @@ class CatgeoryController extends Controller
     }
 
 
+    public function showCategory(){
+
+
+        $categories = DB::table('categories')->get();
+
+        return view('dashboard.dashboardcategory',['categories' => $categories]);
+
+
+
+    }
+
+    public function showEdit($id){
+
+
+        $category = Category::findOrFail($id);
+
+
+        return view('dashboard.editCategory', ['category' => $category]);
+
+    }
+
+
+
 
 }

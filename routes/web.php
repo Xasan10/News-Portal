@@ -3,6 +3,7 @@
 use App\Http\Controllers\ArticlesController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CategoryViewController;
+use App\Http\Controllers\CatgeoryController;
 use App\Http\Controllers\CommentsController;
 use App\Http\Controllers\CommentsViewController;
 use App\Http\Controllers\DashboardController;
@@ -66,6 +67,10 @@ Route::DELETE('/post/{id}', [PostViewController::class, 'destroy'])->name('post.
 
 Route::get('/post/update-view/{id}',[PostViewController::class,'updateView'])->name('post.updateview');
 Route::put('/post/update-view/{id}',[PostViewController::class,'Update'])->name('post.update');
+
+Route::get('/dashboard/categories',[CatgeoryController::class,'showCategory'])->name('category.view');
+
+Route::get('/dashboard/categories/{id}',[CatgeoryController::class,'showEdit'])->name('edit.category');
 
 
 Route::middleware('guest')->group(function () {
