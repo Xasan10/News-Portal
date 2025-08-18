@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Hash;
+use Illuminate\Container\Attributes\DB as AttributesDB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -16,7 +17,9 @@ class UsersController extends Controller
 
 public function index() {
     $users = DB::table('users')->get();
-    return view('users.index', compact('users'));
+
+    $roles = DB::table('roles')->get();
+    return view('users.index', ['users' => $users,'roles' => $roles]);
 }
 
 public function create() {
@@ -68,7 +71,7 @@ $updateData = [
     'name'  => $data['name'],
     'email' => $data['email'],
     'bio'   => $data['bio'] ?? null,
-    'img'   => $imgPath, // never null unless you want it null
+    'img'   => $imgPath,
 ];
 
     if (!empty($data['password'])) {
@@ -126,10 +129,13 @@ public function showUsers(Request $request){
 
 
     $users = User::all();
+    $user = Auth::user();
+
+    $roles = DB::table('roles')->get();
 
 
 
-    return view('dashboard.users',['users' => $users]);
+    return view('dashboard.users',['users' => $users,'roles'=>$roles,'user'=>$user]);
 
 
 

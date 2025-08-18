@@ -125,7 +125,8 @@
 					   @foreach ($articles as $article)
                         <tr data-id="{{ $article->article_id }}">
 							<td>{{ $article->article_id }}</td>
-                            <td>{{ $article->title }}</td>
+                            <td><a href="{{ route('show.details',$article->article_id) }}" style="  color: inherit;      /* use the same color as parent (your h1) */
+  text-decoration: none;">{{ $article->title }}</a></td>
                             <td>{{ $article->category_name }}</td>
                             @if (auth()->user()->hasAnyRole('admin|editor'))
                                <td>{{ $article->author}}</td>

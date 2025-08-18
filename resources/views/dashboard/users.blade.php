@@ -37,27 +37,26 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($users as $user)
+                    @foreach ($users as $u)
                         <tr>
-                            <td>{{ $user->name }}</td>
-                            <td class="d-none d-xl-table-cell">{{ \Carbon\Carbon::parse($user->created_at)->format('Y-m-d') }}</td>
-                            <td><span class="badge bg-success">{{ $user->roles->first()->name ?? 'No role' }}</span></td>
+                            <td>{{ $u->name }}</td>
+                            <td class="d-none d-xl-table-cell">{{ \Carbon\Carbon::parse($u->created_at)->format('Y-m-d') }}</td>
+                            <td><span class="badge bg-success">{{ $u->roles->first()->name ?? 'No role' }}</span></td>
                             <td>
-                                <form class="role-form" data-user-id="{{ $user->id }}">
+                                <form class="role-form" data-user-id="{{ $u->id }}">
                                     @csrf
                                     <select name="role">
-                                        <option value="admin" {{ $user->hasRole('admin') ? 'selected' : '' }}>ADMINSTATOR</option>
-                                        <option value="editor" {{ $user->hasRole('editor') ? 'selected' : '' }}>Editor</option>
-                                        <option value="author" {{ $user->hasRole('author') ? 'selected' : '' }}>Author</option>
-                                        <option value="user" {{ $user->hasRole('user') ? 'selected' : '' }}>User</option>
+                                        @foreach ($roles as $role )
+                                            <option value="{{ $role->name }}" {{ $u->hasRole($role->name) ? 'selected' : '' }}>{{  $role->name }}</option>
+                                        @endforeach
                                     </select>
                                 </form>
                             </td>
                                  <td>  
-                               <form action="{{ route('users.toggleBlock', $user->id) }}" method="POST" style="display:inline">
+                               <form action="{{ route('users.toggleBlock', $u->id) }}" method="POST" style="display:inline">
                                     @csrf
-                                    <button type="submit" class="btn btn-sm {{ $user->is_blocked ? 'btn-success' : 'btn-danger' }}">
-                                        {{ $user->is_blocked ? 'Unblock' : 'Block' }}
+                                    <button type="submit" class="btn btn-sm {{ $u->is_blocked ? 'btn-success' : 'btn-danger' }}">
+                                        {{ $u->is_blocked ? 'Unblock' : 'Block' }}
                                     </button>
                                 </form>
 
