@@ -7,6 +7,7 @@ use App\Http\Resources\CategoryResource;
 use App\Models\Category;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Str;
 
@@ -125,7 +126,9 @@ class CatgeoryController extends Controller
 
         $categories = DB::table('categories')->get();
 
-        return view('dashboard.dashboardcategory',['categories' => $categories]);
+        $user = Auth::user();
+
+        return view('dashboard.dashboardcategory',['categories' => $categories,'user'=>$user]);
 
 
 

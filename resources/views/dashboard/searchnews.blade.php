@@ -1,12 +1,12 @@
-
 @extends('dashboard.dashboard')
+
 
 @section('content')
 
 
 		<div class="main">
 		
-			<main class="content" >
+			<main class="content">
 				<form action="{{ route('post.store') }} " method="post" enctype="multipart/form-data"   >
 
                 @csrf
@@ -84,8 +84,11 @@
 
                 <button class="btn btn-primary" type="submit">Cretae New Article</button>
 
+            
+
                 </form>
-                  <div class="card-header"  >
+
+             <div class="card-header" style=" justify-content:space-between; align-items: center;" >
                 <h5 class="card-title mb-0">Articles</h5>
                   <div class="col-xl-2 col-lg-2 col-md-4">
                                 <div class="header-right-btn f-right d-none d-lg-block">
@@ -103,6 +106,7 @@
                                     
                                 </div>
                             </div>
+            </div>     
 
 			  <table class="table table-hover my-0" id="myTable">
                 <thead>

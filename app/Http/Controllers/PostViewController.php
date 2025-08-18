@@ -52,7 +52,7 @@ class PostViewController extends Controller
 
 
 
-        return view('dashboard.createpost',['categories'=>$categories,'articles' => $articles]);
+        return view('dashboard.createpost',['categories'=>$categories,'articles' => $articles,'user'=>$user]);
 
 
 
@@ -148,6 +148,49 @@ public function updateView($id){
     return redirect()->route('post')->with('success', 'Article updated successfully.');
 }
 
+
+public function search(Request $request){
+
+
+        $search = $request->input('search');
+
+        $categories =  Category::all();
+            $user = Auth::user();
+
+             if ($user->hasAnyRole(['admin','editor'])) {
+                    $articles = DB::table('articles')
+        ->join('categories', 'articles.category_id', "=", 'categories.id' )
+        ->join('users','articles.user_id','=','users.id')
+        ->select('categories.name as category_name', 'articles.title', 'articles.updated_at', 'articles.id as article_id','users.name as author')
+        ->orderBy('articles.updated_at','desc')->search($search)->get();
+        }else{
+
+            $articles = DB::table('articles')
+                ->join('categories', 'articles.category_id', '=', 'categories.id')
+                ->join('users', 'articles.user_id', '=', 'users.id')
+                ->select(
+                    'categories.name as category_name',
+                    'articles.title',
+                    'articles.updated_at',
+                    'articles.id as article_id',
+                    'users.name as author'
+                )
+                ->orderBy('articles.updated_at', 'desc')
+                ->where('user_id', $user->id)
+                ->search($search)->get();
+
+
+        }
+
+
+     
+   
+
+        return view('dashboard.searchnews',['articles' => $articles, 'search' => $search,'categories'=>$categories,],);
+
+
+
+}
 
 
 }

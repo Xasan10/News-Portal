@@ -29,47 +29,33 @@
 								<div class="card-body text-center">
 				
 
-								<a href="{{ route('profile.edit') }}"><img src="{{ 'storage/' . $user->img == null ? 'https://placehold.co/640x480.png?text=News+Article':'storage/' . $user->img == null}}" alt="Christina Mason" class="img-fluid rounded-circle mb-2" width="128" height="128" /></a>
-
+						     <img 
+                  src="{{ $user->img ? asset('storage/' . $user->img) : 'https://placehold.co/128x128.png?text=User' }}" 
+                  alt="{{ $user->name }}" 
+                  class="img-fluid rounded-circle mb-2" 
+                  width="128" height="128" 
+                  id="img-id"
+                  style="cursor:pointer;"
+                />
 											
-											
-
-									
-									<h5 class="card-title mb-0"></h5>
-									<div class="text-muted mb-2">Lead Developer</div>
-
-									<div>
-										<a class="btn btn-primary btn-sm" href="#">Follow</a>
-										<a class="btn btn-primary btn-sm" href="#"><span data-feather="message-square"></span> Message</a>
-									</div>
-								</div>
-								<hr class="my-0" />
-								<div class="card-body">
-									<h5 class="h6 card-title">Email:</h5>
-                                    <h5 class="h6 card-title"></h5>
+							
 
 								</div>
 								<hr class="my-0" />
 								<div class="card-body">
-									<h5 class="h6 card-title">About</h5>
-									<ul class="list-unstyled mb-0">
-										<li class="mb-1"><span data-feather="home" class="feather-sm me-1"></span> Lives in <a href="#">San Francisco, SA</a></li>
+									<h5 class="h6 card-title" style="color: rgba(77, 117, 209, 1);" >Name:</h5>
+									<h5 class="mb-1" >{{ $user->name }}</h5>
+									<h5 class="h6 card-title" style="color:#4D75D1;">Email:</h5>
+                                    <h5 class="mb-1">{{ $user->email }}</h5>
 
-										<li class="mb-1"><span data-feather="briefcase" class="feather-sm me-1"></span> Works at <a href="#">GitHub</a></li>
-										<li class="mb-1"><span data-feather="map-pin" class="feather-sm me-1"></span> From <a href="#">Boston</a></li>
-									</ul>
 								</div>
 								<hr class="my-0" />
 								<div class="card-body">
-									<h5 class="h6 card-title">Elsewhere</h5>
-									<ul class="list-unstyled mb-0">
-										<li class="mb-1"><a href="#">staciehall.co</a></li>
-										<li class="mb-1"><a href="#">Twitter</a></li>
-										<li class="mb-1"><a href="#">Facebook</a></li>
-										<li class="mb-1"><a href="#">Instagram</a></li>
-										<li class="mb-1"><a href="#">LinkedIn</a></li>
-									</ul>
+									<h5 class="h6 card-title" style="color: rgba(77, 117, 209, 1);">Bio:</h5>
+									<p>{{ $user->bio }}</p>
 								</div>
+								<hr class="my-0" />
+								
 							</div>
 						</div>
 
@@ -78,41 +64,47 @@
 				</div>
 			</main>
 
-			<footer class="footer">
-				<div class="container-fluid">
-					<div class="row text-muted">
-						<div class="col-6 text-start">
-							<p class="mb-0">
-								<a class="text-muted" href="https://adminkit.io/" target="_blank"><strong>AdminKit</strong></a> &copy;
-							</p>
-						</div>
-						<div class="col-6 text-end">
-							<ul class="list-inline">
-								<li class="list-inline-item">
-									<a class="text-muted" href="https://adminkit.io/" target="_blank">Support</a>
-								</li>
-								<li class="list-inline-item">
-									<a class="text-muted" href="https://adminkit.io/" target="_blank">Help Center</a>
-								</li>
-								<li class="list-inline-item">
-									<a class="text-muted" href="https://adminkit.io/" target="_blank">Privacy</a>
-								</li>
-								<li class="list-inline-item">
-									<a class="text-muted" href="https://adminkit.io/" target="_blank">Terms</a>
-								</li>
-							</ul>
-						</div>
-					</div>
-				</div>
-			</footer>
+
+    <ul id="profile-menu" style="display:none; position:absolute; background:white; border:1px solid #ccc; padding:10px; list-style:none;">
+      <li><a href="{{ route('profile.edit', ) }}">Edit Profile</a></li>
+      <li><a href="#">Logout</a></li>
+    </ul>
+
+
+		
 		</div>
 	</div>
 
 
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 
 
 
+
+
+
+
+
+<script>
+  const avatar = document.getElementById("img-id");
+  const menu = document.getElementById("profile-menu");
+
+  avatar.addEventListener("contextmenu", function(event) {
+    event.preventDefault(); 
+
+    menu.style.display = "block";
+    menu.style.left = event.pageX + "px";
+    menu.style.top = event.pageY + "px";
+  });
+
+
+  document.addEventListener("click", function(event) {
+    if (!menu.contains(event.target) && event.target !== avatar) {
+      menu.style.display = "none";
+    }
+  });
+</script>
 
 
 

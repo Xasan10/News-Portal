@@ -54,7 +54,7 @@ Route::post('/update/{id}',[UsersController::class,'update'])->name('users.updat
 
 Route::get('/load-more-articles', [ProfileViewController::class, 'loadMore']);
 
-Route::get('/api/users', [UsersController::class,'searchUser'])->name('search.users');
+Route::get('/dashboard/users', [UsersController::class,'searchUser'])->name('search.users');
 
 
 
@@ -71,6 +71,7 @@ Route::put('/post/update-view/{id}',[PostViewController::class,'Update'])->name(
 Route::get('/dashboard/categories',[CatgeoryController::class,'showCategory'])->name('category.view');
 
 Route::get('/dashboard/categories/{id}',[CatgeoryController::class,'showEdit'])->name('edit.category');
+Route::get('/dashboard/news',[PostViewController::class,'search'])->name('search.news');
 
 
 Route::middleware('guest')->group(function () {
@@ -85,3 +86,6 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/profile/edit', [ProfileViewController::class, 'edit'])->name('profile.edit');
     Route::post('/profile/upload-picture', [ProfileViewController::class, 'uploadPicture'])->name('profile.upload.picture');
 });
+
+
+Route::put('dashboard/profile/edit/{id}',[UsersController::class,'update'])->name('users.update');

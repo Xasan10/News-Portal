@@ -17,29 +17,7 @@ class ProfileViewController extends Controller
         return view('dashboard.editprofile', ['user' => auth()->user()]);
     }
 
-    public function uploadPicture(Request $request)
-    {
-        $request->validate([
-            'profile_picture' => 'required|image|mimes:jpeg,png,jpg,webp|max:2048'
-        ]);
 
-        $user = auth()->user();
-
-        // Delete old picture if exists
-        if ($user->profile_picture && Storage::disk('public')->exists($user->profile_picture)) {
-            Storage::disk('public')->delete($user->profile_picture);
-        }
-
-        // Store new one
-        $path = $request->file('profile_picture')->store('profile_pictures', 'public');
-        $user->profile_picture = $path;
-        $user->save();
-
-        return response()->json([
-            'success' => true,
-            'newImageUrl' => asset('storage/' . $user->profile_picture)
-        ]);
-    }
 
     public function showProfile($id){
     

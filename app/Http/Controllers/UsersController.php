@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Hash;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash as FacadesHash;
+use Illuminate\Support\Facades\Storage;
 
 class UsersController extends Controller
 {
@@ -48,19 +50,26 @@ public function update(Request $request, $id) {
     $data = $request->validate([
         'name' => 'required|string|max:255',
         'email' => 'required|email|unique:users,email,' . $id,
+        'bio' =>'nullable|string',
         'password' => 'nullable|min:6|confirmed',
         'img' =>'nullable|image|mimes:jpg,jpeg,png,gif,svg,webp|max:2048'
     ]);
+    $user = Auth::user();
 
+   $imgPath = $user->img; 
+if ($request->hasFile('img')) {
+    if ($user->img) {
+        Storage::disk('public')->delete($user->img);
+    }
+    $imgPath = $request->file('img')->store('img','public');
+}
 
-    $img = $request->file('img')->store('img','public');
-
-    $updateData = [
-        'name' => $data['name'],
-        'email' => $data['email'],
-        'updated_at' => now(),
-        'img' => $img
-    ];
+$updateData = [
+    'name'  => $data['name'],
+    'email' => $data['email'],
+    'bio'   => $data['bio'] ?? null,
+    'img'   => $imgPath, // never null unless you want it null
+];
 
     if (!empty($data['password'])) {
         $updateData['password'] = FacadesHash::make($data['password']);
@@ -68,7 +77,7 @@ public function update(Request $request, $id) {
 
     DB::table('users')->where('id', $id)->update($updateData);
 
-    return redirect()->route('users.index')->with('success', 'User updated!');
+    return redirect()->route('profile',['id' => $id])->with('success', 'User updated!');
 }
 
 public function destroy($id) {
